@@ -117,3 +117,65 @@ console.log(evenNumbers); // [2, 4]
 ```
 ## Async Await ,Promises, Fetch 
 This topic is a bit more complex so this will be for next time! Unless we have a lot of left over time
+
+## Promises
+When building an application we have to make a network request to get more data. `fetch` allows us to get this data through Promises objects. Promises represents values that hasnt been obtained yet but will be eventually , such as a network request.
+
+```JavaScript
+const myPromise = new Promise((resolve, reject) => {
+  const success = true;
+
+  if (success) {
+    resolve("Everything worked!");
+  } else {
+    reject("Something went wrong.");
+  }
+});
+
+myPromise
+  .then(message => console.log(message))
+  .catch(error => console.error(error));
+// Here we make the promise object we holds the promise , then we consume it
+// with .then to get the value and do something with it.
+// .catch is what we the program does if an error occurs in the promise
+```
+
+Most of the time you wont be writing your own promise , you'll be working with promise object obtained from `fetch`.
+
+## Async + Await Version
+
+async and await let us work with Promises using cleaner, more readable syntax.
+
+Key ideas:
+
+Adding async before a function makes it automatically return a Promise.
+
+Using await pauses the function until the Promise resolves.
+
+Inside an async function, we can write asynchronous code that looks synchronous.
+
+Example with fetch:
+```JavaScript
+async function getData() {
+  try {
+    // fetch returns a Promise, so we await its value
+    const response = await fetch("https://dog.ceo/api/breeds/image/random");
+
+    // response.json() ALSO returns a Promise, so we await that too
+    const data = await response.json();
+
+    console.log(data);
+  } catch (err) {
+    console.error("There was an error:", err);
+  }
+}
+getData();
+```
+
+`fetch()` starts a network request and returns a Promise.
+
+`await fetch()` waits for the request to finish before moving on.
+
+response.json() also returns a Promise that resolves to actual data.
+
+We usually need two awaits when using fetch:

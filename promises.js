@@ -1,0 +1,5 @@
+console.log('Loading data....')
+const reponse = await fetch("https://dog.ceo/api/breeds/image/random")
+const answer = await reponse.json()
+console.log(answer)
+console.log("Data loaded")
